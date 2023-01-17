@@ -21,6 +21,10 @@ public class Dino extends Actor
     int hasEgg = 0;
     
     int count = 0;
+    
+    int speed = 2;
+    
+    GreenfootSound takeEgg = new GreenfootSound("dinosaur-5-86564.mp3");
     //count if scores 3 times player 1 wins
 
 
@@ -58,6 +62,7 @@ public class Dino extends Actor
         {
             getWorld().removeObject(gotEgg1);
             hasEgg += 1;
+            speed = 2;
         }
         
         if(getX() <= 400 && hasEgg == 1)
@@ -66,6 +71,8 @@ public class Dino extends Actor
             world.increaseScore();
             hasEgg --;
             count ++;
+            takeEgg.play();
+            speed = 2;
         }
     }
 
@@ -80,9 +87,21 @@ public class Dino extends Actor
             hasEgg = 0;
             MyWorld world = (MyWorld) getWorld();
             world.spawnEgg1();
+            speed = 3;
         }
     }
     
+    public void speed()
+    {
+        Actor gotSpeed = getOneIntersectingObject(PowerUp.class);
+        if(isTouching(PowerUp.class))
+        {
+            speed ++;
+            MyWorld world = (MyWorld) getWorld();
+            getWorld().removeObject(gotSpeed);
+            world.powerUp();
+        }
+    }
     
     /**
      * This new movement makes for more intresting gameplay
@@ -90,7 +109,7 @@ public class Dino extends Actor
     
     public void act()
     {
-        move(3);
+        move(speed);
         if(Greenfoot.isKeyDown("d"))
         {
             turn(3);
@@ -103,6 +122,7 @@ public class Dino extends Actor
         animateDino();
         stealEgg();
         tagged();
+        speed();
         
         if(count == 3)
         {

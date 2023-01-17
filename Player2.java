@@ -16,11 +16,14 @@ public class Player2 extends Actor
     int hasEgg = 0;
     int count = 0;
     
+    int speed = 2;
+    GreenfootSound touchDown = new GreenfootSound("dinosaur-2-86565.mp3");
+    
     GreenfootImage[] walk = new GreenfootImage[6];
     
     public void act() 
     {
-        move(-3);
+        move(- + speed);
         if(Greenfoot.isKeyDown("right"))
         {
             turn(3);
@@ -58,8 +61,8 @@ public class Player2 extends Actor
         {
             walk[i] = new GreenfootImage("images/player walking/Muchkin" + i + ".png");
             walk[i].mirrorHorizontally();
-            //walk[i].scale(55,55);
-            
+            walk[i].scale(54,54);
+            // 55, 55 past
         }
     }
     
@@ -79,6 +82,7 @@ public class Player2 extends Actor
             world.increaseScore2();
             hasEgg --;
             count ++;
+            touchDown.play();
         }
     }
 
